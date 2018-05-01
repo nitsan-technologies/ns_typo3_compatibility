@@ -5,7 +5,7 @@ It includes following funtionalities.
 
 ### 1. TYPO3 Version Server Compatibility
 
-![server_compatibility](https://user-images.githubusercontent.com/2622317/39395814-ff677e12-4b00-11e8-9701-5071e3f08c57.png)
+![server_compatibility_v2](https://user-images.githubusercontent.com/2622317/39464205-a1434e48-4d39-11e8-9fd9-e27319335ed1.png)
 
 ### 2. Check DataBase Connectivity: 
 
