@@ -518,7 +518,7 @@ function get_typo3_version_config () {
             <?php
             
                 if ( isset( $_POST['check_phpinfo_button'] ) ) { //Check if the Check Email function is submitted or not.
-                    echo phpinfo();
+                    phpinfo();
                 }
             ?>    
         </div>        
