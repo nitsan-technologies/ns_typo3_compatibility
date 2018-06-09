@@ -337,25 +337,25 @@ function get_typo3_version_config () {
             <h1>Check Server Configuration</h1>
         </div>
         <div class="form-wrapper">
-            <form action="TYPO3_Check_Configuration.php" method="post">
+            <form action="TYPO3_Check_Configuration.php" method="get">
                 <label>Select TYPO3 Version:</label>
-                <select name="version" id="typo3-version" required>
+                <select name="version" id="typo3-version" required onchange="this.form.submit()">
                     <option value="">Select</option>
                     <?php
                     $TYPO3Version = array( '4' => 'TYPO3 4.X', '6' => 'TYPO3 6.X', '7' => 'TYPO3 7.X', '8' => 'TYPO3 8.X', '9' => 'TYPO3 9.X');
                     foreach ($TYPO3Version as $key => $value) {
-                        $VersionSelected = ( isset($_POST['version']) && $_POST['version'] == $key) ? "selected=selected" : "";
+                        $VersionSelected = ( isset($_GET['version']) && $_GET['version'] == $key) ? "selected=selected" : "";
                         echo "<option value=".$key." ".$VersionSelected.">".$value."</option>";
                     }
                     ?>
                 </select>
-                <input name="server_config_test" value="Go" type="submit">
+                <!--<input name="server_config_test" value="Go" type="submit">-->
             </form>
         </div>
         <div class="infor-table-wrapper">
             <?php
-            if (isset($_POST['server_config_test'])) {
-                $selected_val = $_POST['version'];               
+            if (isset($_GET['version'])) {
+                $selected_val = $_GET['version'];               
                 echo show_message ( "You have selected: <b>TYPO3 " . $selected_val . ".X </b>", "alert-success");
                 ?>
                 <table>
@@ -370,7 +370,7 @@ function get_typo3_version_config () {
                     <tbody>
                     <?php
                     $VersionInfo = get_typo3_version_config();
-                        if( isset( $_POST['version']) ) {
+                        if( isset( $_GET['version']) ) {
                         	$value = $VersionInfo[$selected_val];
                         	foreach ($value as $module => $module_value) {
                         		if( $module_value == '-' ) {
