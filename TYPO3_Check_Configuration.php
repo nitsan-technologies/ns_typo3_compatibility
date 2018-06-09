@@ -270,7 +270,8 @@ function get_typo3_version_config () {
                                 'memory_limit' => '128M',
                                 'max_input_vars' => '1500',
                                 'upload_max_filesize' => '200M',
-                                'post_max_size' => '800M'
+                                'post_max_size' => '800M',
+                                'GraphicsMagick' => '-',
                             ),
                 '6' => array(
                                 'php_min' => '5.3',
@@ -284,7 +285,8 @@ function get_typo3_version_config () {
                                 'memory_limit' => '128M',
                                 'max_input_vars' => '1500',
                                 'upload_max_filesize' => '200M',
-                                'post_max_size' => '800M'
+                                'post_max_size' => '800M',
+                                'GraphicsMagick' => '-',
                             ),
                 '7' => array(
                                 'php_min' => '5.5',
@@ -298,7 +300,8 @@ function get_typo3_version_config () {
                                 'memory_limit' => '128M',
                                 'max_input_vars' => '1500',
                                 'upload_max_filesize' => '200M',
-                                'post_max_size' => '800M'
+                                'post_max_size' => '800M',
+                                'GraphicsMagick' => '-',
                             ),
                 '8' => array(
                                 'php_min' => '7',
@@ -312,7 +315,8 @@ function get_typo3_version_config () {
                                 'memory_limit' => '128M',
                                 'max_input_vars' => '1500',
                                 'upload_max_filesize' => '200M',
-                                'post_max_size' => '800M'
+                                'post_max_size' => '800M',
+                                'GraphicsMagick' => '-',
                             ),
                 '9' => array(
                                 'php_min' => '7.2',
@@ -326,7 +330,8 @@ function get_typo3_version_config () {
                                 'memory_limit' => '128M',
                                 'max_input_vars' => '1500',
                                 'upload_max_filesize' => '200M',
-                                'post_max_size' => '800M'
+                                'post_max_size' => '800M',
+                                'GraphicsMagick' => '-',
                             ),
             );
 }
@@ -379,14 +384,21 @@ function get_typo3_version_config () {
                                         exec('convert -version',$output);
                                         $installed = ($output) ? "Yes" : "No";
                                         $color = ($output) ? "green" : "red";
-                                    } else {
+                                        $current = "-";
+                                    }elseif ( $module =='GraphicsMagick' ) {
+                                        exec('gm',$output1);
+                                        $installed = ($output1) ? "Yes" : "No";
+                                        $color = ($output1) ? "green" : "red";
+                                        $current = substr($output1[0], 14, 7);
+                                    }else {
                                         $installed = (extension_loaded($module)) ? "Yes" : "No";
                                         $color = (extension_loaded($module)) ? "green" : "red";
-                                    }                        			
-                        			$current = "-";
-                        			$required = "-";
-                        			$title = ucwords(str_replace('_',' ',$module));
-                        		} elseif ( $module =='php_min' ) {
+                                        $current = "-";
+                                    }                                   
+                                    
+                                    $required = "-";
+                                    $title = ucwords(str_replace('_',' ',$module));
+                                } elseif ( $module =='php_min' ) {
                         			$installed = (phpversion()) ? "Yes" : "No";
                         			$color = (version_compare(PHP_VERSION, $value[php_min]) >= 0) ? "green" : "red";
                         			$current = substr(phpversion(), 0, 6);
