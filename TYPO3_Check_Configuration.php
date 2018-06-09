@@ -352,6 +352,7 @@ function get_typo3_version_config () {
                 <!--<input name="server_config_test" value="Go" type="submit">-->
             </form>
         </div>
+        
         <div class="infor-table-wrapper">
             <?php
             if (isset($_GET['version'])) {
