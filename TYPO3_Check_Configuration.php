@@ -426,12 +426,16 @@ function get_typo3_version_config () {
 		                        	}
 
                         		} else {
-                        			$installed = (ini_get($module) > 0) ? "Yes" : "No";
-                        			$color = (ini_get($module) >= $module_value) ? "green" : "red";
-                        			$current = ini_get($module);
-                        			$required = $module_value;
-                        			$title = ucwords(str_replace('_',' ',$module));
-                        		}
+                                    $installed = (ini_get($module) > 0) ? "Yes" : "No";
+                                    $current = ini_get($module);
+                                    if(rtrim($current, "M") >= rtrim($module_value, "M")){
+                                        $color = "green";
+                                    }else{
+                                        $color = "red";
+                                    }
+                                    $required = $module_value;
+                                    $title = ucwords(str_replace('_',' ',$module));
+                                }
                         		
 	                        	if( $module !== 'php_max' ) { 
 	                        		if( $module !== 'sql_max' ) { 
