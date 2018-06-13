@@ -528,13 +528,13 @@ function get_typo3_version_config () {
         <!-- Starging of php info -->
         <div class="form-wrapper">
             
-            <form action="TYPO3_Check_Configuration.php" method="post" name="check_email">
+            <form action="TYPO3_Check_Configuration.php" method="get" name="check_email">
                 <label>Show full server configurations:</label>                
-                <input name="check_phpinfo_button" value="PHP Info" type="submit">
+                <input name="phpinfo" value="PHP Info" type="submit">
             </form>
             <?php
             
-                if ( isset( $_POST['check_phpinfo_button'] ) ) { //Check if the Check Email function is submitted or not.
+                if ( isset( $_GET['phpinfo'] ) ) { //Check if the Check Email function is submitted or not.
                     phpinfo();
                 }
             ?>    
