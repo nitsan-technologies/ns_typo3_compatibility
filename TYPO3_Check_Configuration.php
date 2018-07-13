@@ -389,7 +389,12 @@ function get_typo3_version_config () {
                                         exec('gm',$output1);
                                         $installed = ($output1) ? "Yes" : "No";
                                         $color = ($output1) ? "green" : "red";
-                                        $current = substr($output1[0], 14, 7);
+                                        if($output1) {
+                                            $current = substr($output1['0'], 14, 7);
+                                        }else{
+                                            $current = 'Not Installed';
+                                        }
+                                        
                                     }else {
                                         $installed = (extension_loaded($module)) ? "Yes" : "No";
                                         $color = (extension_loaded($module)) ? "green" : "red";
@@ -400,28 +405,28 @@ function get_typo3_version_config () {
                                     $title = ucwords(str_replace('_',' ',$module));
                                 } elseif ( $module =='php_min' ) {
                         			$installed = (phpversion()) ? "Yes" : "No";
-                        			$color = (version_compare(PHP_VERSION, $value[php_min]) >= 0) ? "green" : "red";
+                        			$color = (version_compare(PHP_VERSION, $value['php_min']) >= 0) ? "green" : "red";
                         			$current = substr(phpversion(), 0, 6);
-                        			$required = ">=".$value[php_min];
+                        			$required = ">=".$value['php_min'];
                         			$title = "PHP";
-		                        	if( $value[php_max] > 0 ){
+		                        	if( $value['php_max'] > 0 ){
 		                        		if($color == green) $color = (version_compare(PHP_VERSION, $value[php_max]) < 0) ? "green" : "red";
-			                        	$highvalue = " to ".$value[php_max];
-			                        	$required = $value[php_min].$highvalue;
+			                        	$highvalue = " to ".$value['php_max'];
+			                        	$required = $value['php_min'].$highvalue;
 		                        	}
                         		} elseif ( $module == 'sql_min' ) {
                         			$mysqlcurrent = get_current_mysql_version();
                         			$installed = ($mysqlcurrent > 0) ? "Yes" : "No";
-                        			$color = (version_compare($mysqlcurrent, $value[sql_min]) >= 0) ? "green" : "red";
+                        			$color = (version_compare($mysqlcurrent, $value['sql_min']) >= 0) ? "green" : "red";
                         			$current = $mysqlcurrent;
-                        			$required = ">=".$value[sql_min];
+                        			$required = ">=".$value['sql_min'];
                         			$title = "Mysql";
-		                        	if( $value[sql_max] > 0 ) {
-		                        		if( $color == green ) {
-			                        		$color = (version_compare($mysqlcurrent, ($value[sql_max]+1)) <= 0) ? "green" : "red";
+		                        	if( $value['sql_max'] > 0 ) {
+		                        		if( $color == 'green' ) {
+			                        		$color = (version_compare($mysqlcurrent, ($value['sql_max']+1)) <= 0) ? "green" : "red";
 			                        	}
-			                        	$highvalue = " to ".$value[sql_max];
-			                        	$required = $value[sql_min].$highvalue;
+			                        	$highvalue = " to ".$value['sql_max'];
+			                        	$required = $value['sql_min'].$highvalue;
 
 		                        	}
 
