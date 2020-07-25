@@ -83,7 +83,7 @@ Contact: info@nitsan.in
             padding-left: 5px;
         }
         select:focus {
-            outline: none !important;	
+            outline: none !important;   
         }
         img {
             max-width: 100%;
@@ -131,7 +131,7 @@ Contact: info@nitsan.in
         .bg-green {
             background-color: #dff0d8;
             color: #3c763d;
-        }	
+        }   
         .bg-red td,
         .bg-green td {
             color: #fff !important;
@@ -211,7 +211,7 @@ Contact: info@nitsan.in
             color: #a94442;
         }
         .center table {
-        	width: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -333,6 +333,21 @@ function get_typo3_version_config () {
                                 'post_max_size' => '100M',
                                 'GraphicsMagick' => '1.3',
                             ),
+                '10' => array(
+                                'php_min' => '7.2',
+                                'php_max' => '0',
+                                'sql_min' => '5.7',
+                                'sql_max' => '8.1',
+                                'ImageMagick' => '6',
+                                'gd' => '-',
+                                'mbstring' => '-',
+                                'max_execution_time' => '240',
+                                'memory_limit' => '256M',
+                                'max_input_vars' => '1500',
+                                'upload_max_filesize' => '100M',
+                                'post_max_size' => '100M',
+                                'GraphicsMagick' => '1.3',
+                            ),
             );
 }
 ?>
@@ -347,7 +362,7 @@ function get_typo3_version_config () {
                 <select name="version" id="typo3-version" required onchange="this.form.submit()">
                     <option value="">Select</option>
                     <?php
-                    $TYPO3Version = array( '4' => 'TYPO3 4.X', '6' => 'TYPO3 6.X', '7' => 'TYPO3 7.X', '8' => 'TYPO3 8.X', '9' => 'TYPO3 9.X');
+                    $TYPO3Version = array( '4' => 'TYPO3 4.X', '6' => 'TYPO3 6.X', '7' => 'TYPO3 7.X', '8' => 'TYPO3 8.X', '9' => 'TYPO3 9.X', '10' => 'TYPO3 10.X');
                     foreach ($TYPO3Version as $key => $value) {
                         $VersionSelected = ( isset($_GET['version']) && $_GET['version'] == $key) ? "selected=selected" : "";
                         echo "<option value=".$key." ".$VersionSelected.">".$value."</option>";
@@ -377,11 +392,11 @@ function get_typo3_version_config () {
                     <?php
                     $VersionInfo = get_typo3_version_config();
                         if( isset( $_GET['version']) ) {
-                        	$value = $VersionInfo[$selected_val];
-                        	foreach ($value as $module => $module_value) {
-                        		if( $module_value == '-' ) {
+                            $value = $VersionInfo[$selected_val];
+                            foreach ($value as $module => $module_value) {
+                                if( $module_value == '-' ) {
                                     if( $module == 'ImageMagick' ) {
-                                        exec('convert -version',$output);
+                                        exec('convert -version', $output);
                                         $installed = ($output) ? "Yes" : "No";
                                         $color = ($output) ? "green" : "red";
                                         $current = "-";
@@ -404,33 +419,33 @@ function get_typo3_version_config () {
                                     $required = "-";
                                     $title = ucwords(str_replace('_',' ',$module));
                                 } elseif ( $module =='php_min' ) {
-                        			$installed = (phpversion()) ? "Yes" : "No";
-                        			$color = (version_compare(PHP_VERSION, $value['php_min']) >= 0) ? "green" : "red";
-                        			$current = substr(phpversion(), 0, 6);
-                        			$required = ">=".$value['php_min'];
-                        			$title = "PHP";
-		                        	if( $value['php_max'] > 0 ){
-		                        		if($color == green) $color = (version_compare(PHP_VERSION, $value[php_max]) < 0) ? "green" : "red";
-			                        	$highvalue = " to ".$value['php_max'];
-			                        	$required = $value['php_min'].$highvalue;
-		                        	}
-                        		} elseif ( $module == 'sql_min' ) {
-                        			$mysqlcurrent = get_current_mysql_version();
-                        			$installed = ($mysqlcurrent > 0) ? "Yes" : "No";
-                        			$color = (version_compare($mysqlcurrent, $value['sql_min']) >= 0) ? "green" : "red";
-                        			$current = $mysqlcurrent;
-                        			$required = ">=".$value['sql_min'];
-                        			$title = "Mysql";
-		                        	if( $value['sql_max'] > 0 ) {
-		                        		if( $color == 'green' ) {
-			                        		$color = (version_compare($mysqlcurrent, ($value['sql_max']+1)) <= 0) ? "green" : "red";
-			                        	}
-			                        	$highvalue = " to ".$value['sql_max'];
-			                        	$required = $value['sql_min'].$highvalue;
+                                    $installed = (phpversion()) ? "Yes" : "No";
+                                    $color = (version_compare(PHP_VERSION, $value['php_min']) >= 0) ? "green" : "red";
+                                    $current = substr(phpversion(), 0, 6);
+                                    $required = ">=".$value['php_min'];
+                                    $title = "PHP";
+                                    if( $value['php_max'] > 0 ){
+                                        if($color == green) $color = (version_compare(PHP_VERSION, $value[php_max]) < 0) ? "green" : "red";
+                                        $highvalue = " to ".$value['php_max'];
+                                        $required = $value['php_min'].$highvalue;
+                                    }
+                                } elseif ( $module == 'sql_min' ) {
+                                    $mysqlcurrent = get_current_mysql_version();
+                                    $installed = ($mysqlcurrent > 0) ? "Yes" : "No";
+                                    $color = (version_compare($mysqlcurrent, $value['sql_min']) >= 0) ? "green" : "red";
+                                    $current = $mysqlcurrent;
+                                    $required = ">=".$value['sql_min'];
+                                    $title = "Mysql";
+                                    if( $value['sql_max'] > 0 ) {
+                                        if( $color == 'green' ) {
+                                            $color = (version_compare($mysqlcurrent, ($value['sql_max']+1)) <= 0) ? "green" : "red";
+                                        }
+                                        $highvalue = " to ".$value['sql_max'];
+                                        $required = $value['sql_min'].$highvalue;
 
-		                        	}
+                                    }
 
-                        		} else {
+                                } else {
                                     $installed = (ini_get($module) > 0) ? "Yes" : "No";
                                     $current = ini_get($module);
                                     if(rtrim($current, "M") >= rtrim($module_value, "M")){
@@ -441,20 +456,20 @@ function get_typo3_version_config () {
                                     $required = $module_value;
                                     $title = ucwords(str_replace('_',' ',$module));
                                 }
-                        		
-	                        	if( $module !== 'php_max' ) { 
-	                        		if( $module !== 'sql_max' ) { 
-	                        	?>
-	                        		<tr>
-			                            <td><?php echo $title;?></td>
-			                            <td class="text-center"><?php echo $installed;?></td>
-			                            <td class="text-center bg-<?php echo $color; ?>"><?php echo $current; ?></td>
-			                            <td class="text-center bg-<?php echo $color; ?>"><?php echo $required; ?></td>
-			                        </tr>
-			                    <?php
-			                		}
-			                	}
-                        	}
+                                
+                                if( $module !== 'php_max' ) { 
+                                    if( $module !== 'sql_max' ) { 
+                                ?>
+                                    <tr>
+                                        <td><?php echo $title;?></td>
+                                        <td class="text-center"><?php echo $installed;?></td>
+                                        <td class="text-center bg-<?php echo $color; ?>"><?php echo $current; ?></td>
+                                        <td class="text-center bg-<?php echo $color; ?>"><?php echo $required; ?></td>
+                                    </tr>
+                                <?php
+                                    }
+                                }
+                            }
                         }
                     ?>                        
                     </tbody>
@@ -469,16 +484,16 @@ function get_typo3_version_config () {
 
             <?php
             if (isset($_POST['check_db_connection']) ) {
-            	$host = $_POST['host'];
+                $host = $_POST['host'];
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $database = $_POST['database'];
                 $port = $_POST['port'];
 
                 if (!empty($_POST['port']) ) {
-                	$con = mysqli_connect((isset($_POST['host'])) ? $_POST['host'] : "localhost", $username, $password, $database, $port); // Check the connection is successfull or not.
+                    $con = mysqli_connect((isset($_POST['host'])) ? $_POST['host'] : "localhost", $username, $password, $database, $port); // Check the connection is successfull or not.
                 } else {
-                	$con = mysqli_connect((isset($_POST['host'])) ? $_POST['host'] : "localhost", $username, $password, $database); // Check the connection is successfull or not.
+                    $con = mysqli_connect((isset($_POST['host'])) ? $_POST['host'] : "localhost", $username, $password, $database); // Check the connection is successfull or not.
                 }
 
                 echo $DBConnectionMsg = ($con) ? show_message("Database Connection is successful", "alert-success") : show_message( "Error: Connection can not be done. Please check your credentials again", "alert-danger");
